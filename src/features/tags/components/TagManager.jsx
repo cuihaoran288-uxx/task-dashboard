@@ -66,6 +66,7 @@ function TagManager({ onClose }) {
               placeholder="Add a new tag"
               value={newTagName}
               onChange={(e) => setNewTagName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
               className="w-full py-2 px-4 pl-9 text-sm text-neutral-800 rounded-lg border border-neutral-300 focus:border-primary-400 focus:ring-1 focus:ring-primary-200 outline-hidden transition-all"
               data-testid="new-tag-input"
             />
