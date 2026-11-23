@@ -77,6 +77,28 @@ describe('TagManager Component', () => {
     expect(tagInput.value).toBe('');
   });
 
+  test('adds a tag when Enter is pressed in the input', () => {
+    render(<TagManager onClose={mockOnClose} />);
+    
+    const tagInput = screen.getByTestId('new-tag-input');
+    fireEvent.change(tagInput, { target: { value: 'enter-tag' } });
+    fireEvent.keyDown(tagInput, { key: 'Enter' });
+    
+    expect(mockAddTag).toHaveBeenCalledWith('enter-tag');
+    expect(tagInput.value).toBe('');
+  });
+
+  test('does not add a tag when Enter confirms an IME composition', () => {
+    render(<TagManager onClose={mockOnClose} />);
+    
+    const tagInput = screen.getByTestId('new-tag-input');
+    fireEvent.change(tagInput, { target: { value: 'gongzuo' } });
+    fireEvent.keyDown(tagInput, { key: 'Enter', isComposing: true });
+    
+    expect(mockAddTag).not.toHaveBeenCalled();
+    expect(tagInput.value).toBe('gongzuo');
+  });
+
   test('starts editing a tag when edit button is clicked', () => {
     render(<TagManager onClose={mockOnClose} />);
     
